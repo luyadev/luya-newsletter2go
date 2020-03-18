@@ -1,26 +1,26 @@
 {
-	"name" : "VENDOR/NAME",
-	"description" : "",
+	"name" : "luyadev/luya-newsletter2go",
+	"description" : "A LUYA library for newsletter2go service.",
 	"type" : "luya-extension",
 	"keywords" : ["luya"],
 	"license": "MIT",
 	"authors" : [
 		{
-			"name": "",
-			"email": ""
+			"name": "Basil Suter",
+			"email": "git@nadar.io"
 		}
 	],
 	"require-dev" : {
-	    "luyadev/luya-testsuite" : "~1.0.0"
+	    "luyadev/luya-testsuite" : "^1.0"
 	},
 	"autoload" : {
 		"psr-4" : {
-			"VENDOR\\NAME\\" : "src/"
+			"luyadev\\newsletter2go\\" : "src/"
 		}
 	},
 	"autoload-dev" : {
        "psr-4" : {
-           "VENDOR\\NAME\\tests\\" : "tests/"
+           "luyadev\\newsletter2go\\tests\\" : "tests/"
        }
     }
 }

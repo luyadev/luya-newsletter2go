@@ -1,5 +1,5 @@
 <?php
-namespace VENDOR\NAME\tests;
+namespace luya\newsletter2go\tests;
 
 use luya\testsuite\cases\WebApplicationTestCase;
 
