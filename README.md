@@ -2,18 +2,18 @@
   <img src="https://raw.githubusercontent.com/luyadev/luya/master/docs/logo/luya-logo-0.2x.png" alt="LUYA Logo"/>
 </p>
 
-# LUYA *VENDOR/NAME* module/extension
+# LUYA Newsletter2Go
 
 [![LUYA](https://img.shields.io/badge/Powered%20by-LUYA-brightgreen.svg)](https://luya.io)
 
-*Package description*
+A subscription widget and helper methods to work with newsletter2go.ch serivce.
 
 ## Installation
 
 Install the extension through composer:
 
 ```sh
-composer require VENDOR/NAME
+composer require luyadev/luya-newsletter2go
 ```
 
 Run the import command afterwards:
