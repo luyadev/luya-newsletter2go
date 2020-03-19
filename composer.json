@@ -22,8 +22,5 @@
        "psr-4" : {
            "luya\\newsletter2go\\tests\\" : "tests/"
        }
-    },
-	"require": {
-		"newsletter2go/api": "dev-master"
-	}
+    }
 }

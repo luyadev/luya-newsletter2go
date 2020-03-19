@@ -4,10 +4,8 @@ namespace luya\newsletter2go;
 
 use Curl\Curl;
 use luya\helpers\Json;
-use NL2GO\Newsletter2Go_REST_Api;
 use yii\base\BaseObject;
 use yii\base\InvalidConfigException;
-use yii\helpers\VarDumper;
 
 class Contacts extends BaseObject
 {
@@ -44,22 +42,16 @@ class Contacts extends BaseObject
      */
     public function create($email, array $attributes = [])
     {
-        $api = new Newsletter2Go_REST_Api($this->authKey, $this->username, $this->password);
+        $token = $this->auth($this->username, $this->password, $this->authKey);
 
-        $api->setSSLVerification(false);
-
-        $x = $api->addRecipient($email, 'basil', 'suter', 'm');
-
-        $t = $this->auth($this->username, $this->password, $this->authKey);
-
-        $attributes = array_merge($attributes, ['email' => $email, 'listId' => $this->listId]);
+        $attributes = array_merge($attributes, ['email' => $email, 'list_id' => $this->listId]);
 
         $curl = new Curl;
-        $curl->setHeader('Authorization', 'Bearer '. trim($t));
+        $curl->setHeader('Authorization', 'Bearer '. trim($token));
         $curl->setHeader('Content-Type', 'application/json');
-        $request = $curl->post('https://api.newsletter2go.com/recipients', ['email' => 'basil+test@zephir.ch']);
+        $request = $curl->post('https://api.newsletter2go.com/recipients', Json::encode($attributes));
 
-        VarDumper::dump($request, 10, true);
+        var_dump($request->response);
         return $request->isSuccess();
     }
 
