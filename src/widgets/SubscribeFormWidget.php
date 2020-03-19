@@ -5,7 +5,6 @@ namespace luya\newsletter2go\widgets;
 use Yii;
 use luya\base\DynamicModel;
 use luya\base\Widget;
-use luya\helpers\Json;
 use luya\newsletter2go\Contacts;
 use yii\base\InvalidConfigException;
 
@@ -38,7 +37,11 @@ class SubscribeFormWidget extends Widget
      */
     public $listId;
 
-    public $accessToken;
+    public $username;
+
+    public $password;
+
+    public $authKey;
 
     /**
      * @var string The name of attribute which contains the email adresse. This attribute email value will be taken to confirm and subscribe
@@ -83,12 +86,17 @@ class SubscribeFormWidget extends Widget
         parent::init();
 
 
-        if (empty($this->listId) || empty($this->accessToken)) {
+        if (empty($this->listId) || empty($this->username) || empty($this->password) || empty($this->authKey)) {
             throw new InvalidConfigException("The listId and accessToken properties can not be empty.");
         }
 
         if ($this->getModel()->load(Yii::$app->request->post()) && $this->getModel()->validate()) {
-            $subscribe = new Contacts(['accessToken' => $this->accessToken, 'listId' => $this->listId]);
+            $subscribe = new Contacts([
+                'authKey' => $this->authKey,
+                'username' => $this->username,
+                'password' => $this->password,
+                'listId' => $this->listId,
+            ]);
 
             if ($subscribe->create($this->getModelEmail(), $this->getModel()->attributes)) {
                 Yii::$app->session->setFlash(self::MAIL_SUBSCRIBE_SUCCESS);

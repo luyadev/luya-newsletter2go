@@ -15,12 +15,15 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"luyadev\\newsletter2go\\" : "src/"
+			"luya\\newsletter2go\\" : "src/"
 		}
 	},
 	"autoload-dev" : {
        "psr-4" : {
-           "luyadev\\newsletter2go\\tests\\" : "tests/"
+           "luya\\newsletter2go\\tests\\" : "tests/"
        }
-    }
+    },
+	"require": {
+		"newsletter2go/api": "dev-master"
+	}
 }
