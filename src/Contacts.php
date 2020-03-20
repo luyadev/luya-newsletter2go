@@ -49,7 +49,7 @@ class Contacts extends BaseObject
         $curl = new Curl;
         $curl->setHeader('Authorization', 'Bearer '. trim($token));
         $curl->setHeader('Content-Type', 'application/json');
-        $request = $curl->post('https://api.newsletter2go.com/recipients', Json::encode($attributes));
+        $request = $curl->post('https://api.newsletter2go.com/recipients', $attributes, true);
 
         var_dump($request->response);
         return $request->isSuccess();
