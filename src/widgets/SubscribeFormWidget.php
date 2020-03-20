@@ -43,6 +43,8 @@ class SubscribeFormWidget extends Widget
 
     public $authKey;
 
+    public $groupId;
+
     /**
      * @var string The name of attribute which contains the email adresse. This attribute email value will be taken to confirm and subscribe
      */
@@ -98,7 +100,14 @@ class SubscribeFormWidget extends Widget
                 'listId' => $this->listId,
             ]);
 
-            if ($subscribe->create($this->getModelEmail(), $this->getModel()->attributes)) {
+            $recipientId = $subscribe->create($this->getModelEmail(), $this->getModel()->attributes);
+
+            if ($recipientId) {
+
+                if ($this->groupId) {
+                    $subscribe->addToGroup($this->groupId, $recipientId);
+                }
+                
                 Yii::$app->session->setFlash(self::MAIL_SUBSCRIBE_SUCCESS);
             }
         }

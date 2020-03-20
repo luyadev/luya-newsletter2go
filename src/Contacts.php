@@ -6,9 +6,13 @@ use Curl\Curl;
 use luya\helpers\Json;
 use yii\base\BaseObject;
 use yii\base\InvalidConfigException;
+use yii\helpers\VarDumper;
 
 class Contacts extends BaseObject
 {
+    /**
+     * @var string In newsletter2go those are `Adressbooks
+     */
     public $listId;
 
     public $username;
@@ -24,6 +28,8 @@ class Contacts extends BaseObject
         if (empty($this->listId) || empty($this->username) || empty($this->password) || empty($this->authKey)) {
             throw new InvalidConfigException("The listId and username, password and authkey property can not be empty.");
         }
+
+        $this->listId = strtolower($this->listId);
     }
 
     /**
@@ -38,7 +44,7 @@ class Contacts extends BaseObject
      * - "is_unsubscribed": false,
      * - "is_blacklisted": false,
      * - "{{attribute_name}}": "attribute value"
-     * @return boolean
+     * @return boolean|string The recipient id or false if error
      */
     public function create($email, array $attributes = [])
     {
@@ -51,7 +57,33 @@ class Contacts extends BaseObject
         $curl->setHeader('Content-Type', 'application/json');
         $request = $curl->post('https://api.newsletter2go.com/recipients', $attributes, true);
 
-        var_dump($request->response);
+        $array = Json::decode($request->response);
+        
+        if ($request->isSuccess()) {
+            return current($array['value'])['id'];   
+        }
+
+        return false;
+    }
+
+    /**
+     * Which is also known as segment.
+     *
+     * @param string $groupId
+     * @param string $recipientId
+     * @return void
+     */
+    public function addToGroup($groupId, $recipientId)
+    {
+        $groupId = strtolower($groupId);
+        $recipientId = strtolower($recipientId);
+        $token = $this->auth($this->username, $this->password, $this->authKey);
+        
+        $curl = new Curl();
+        $curl->setHeader('Authorization', 'Bearer ' . $token);
+        $curl->setHeader('Content-Type', 'application/json');
+        $request = $curl->post('https://api.newsletter2go.com/lists/'.$this->listId.'/groups/'.$groupId.'/recipients/'.$recipientId);
+
         return $request->isSuccess();
     }
 
