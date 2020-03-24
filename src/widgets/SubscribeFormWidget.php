@@ -119,7 +119,7 @@ class SubscribeFormWidget extends Widget
 
             $attributes = $this->getModel()->attributes();
             $attributes['is_unsubscribed'] = $this->unsubscribed;
-            $recipientId = $subscribe->create($this->getModelEmail(), $this->getModel()->attributes);
+            $recipientId = $subscribe->create($this->getModelEmail(), $attributes);
 
             if ($recipientId) {
 
