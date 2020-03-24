@@ -15,12 +15,24 @@ class Contacts extends BaseObject
      */
     public $listId;
 
+    /**
+     * @var string The username of to generate and retrieve a token
+     */
     public $username;
 
+    /**
+     * @var string The password (!!! ...) for the given user which is required to retrieve a token.
+     */
     public $password;
 
+    /**
+     * @var string The auth key from the newsletter2go dashboard
+     */
     public $authKey;
 
+    /**
+     * {@inheritDoc}
+     */
     public function init()
     {
         parent::init();
@@ -44,6 +56,8 @@ class Contacts extends BaseObject
      * - "is_unsubscribed": false,
      * - "is_blacklisted": false,
      * - "{{attribute_name}}": "attribute value"
+     * 
+     * Keep in mind that custom attributes have the attribute name as saved, like if you have "Country" the attribute name is "Country"
      * @return boolean|string The recipient id or false if error
      */
     public function create($email, array $attributes = [])
@@ -87,6 +101,14 @@ class Contacts extends BaseObject
         return $request->isSuccess();
     }
 
+    /**
+     * Retrieve an auth token for the given user to perform api calls.
+     *
+     * @param string $username
+     * @param string $password
+     * @param string $authKey
+     * @return stringThe token, or false if auth is failed.
+     */
     public function auth($username, $password, $authKey)
     {
         $curl = new Curl();

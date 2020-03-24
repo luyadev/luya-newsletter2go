@@ -33,17 +33,34 @@ class SubscribeFormWidget extends Widget
     const MAIL_SUBSCRIBE_SUCCESS = 'mailSubscribeSuccess';
 
     /**
-     * @var integer The mailjet list id where the subscribes should be added.
+     * @var integer The list id where the subscribes should be added (also known as adressbook).
      */
     public $listId;
 
+    /**
+     * @var string The username of to generate and retrieve a token
+     */
     public $username;
 
+    /**
+     * @var string The password (!!! ...) for the given user which is required to retrieve a token.
+     */
     public $password;
 
+    /**
+     * @var string The auth key from the newsletter2go dashboard
+     */
     public $authKey;
 
+    /**
+     * @var string The group id (also known as segment) to add the user, if not provided the user will not aded to a group.
+     */
     public $groupId;
+
+    /**
+     * @var boolean Whether the form should be used to unsubscribe or subscribe users.
+     */
+    public $unsubscribed = false;
 
     /**
      * @var string The name of attribute which contains the email adresse. This attribute email value will be taken to confirm and subscribe
@@ -100,6 +117,8 @@ class SubscribeFormWidget extends Widget
                 'listId' => $this->listId,
             ]);
 
+            $attributes = $this->getModel()->attributes();
+            $attributes['is_unsubscribed'] = $this->is_unsubscribed;
             $recipientId = $subscribe->create($this->getModelEmail(), $this->getModel()->attributes);
 
             if ($recipientId) {
