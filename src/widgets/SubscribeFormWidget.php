@@ -2,6 +2,7 @@
 
 namespace luya\newsletter2go\widgets;
 
+use Form;
 use Yii;
 use luya\base\DynamicModel;
 use luya\base\Widget;
@@ -58,6 +59,11 @@ class SubscribeFormWidget extends Widget
     public $groupId;
 
     /**
+     * @var string If defined the values will be posted to the form api.
+     */
+    public $formId;
+
+    /**
      * @var boolean Whether the form should be used to unsubscribe or subscribe users.
      */
     public $unsubscribed = false;
@@ -112,27 +118,40 @@ class SubscribeFormWidget extends Widget
         parent::init();
 
 
-        if (empty($this->listId) || empty($this->username) || empty($this->password) || empty($this->authKey)) {
+        if (empty($this->username) || empty($this->password) || empty($this->authKey)) {
             throw new InvalidConfigException("The listId and accessToken properties can not be empty.");
         }
 
         if ($this->getModel()->load(Yii::$app->request->post()) && $this->getModel()->validate()) {
-            $subscribe = new Contacts([
-                'authKey' => $this->authKey,
-                'username' => $this->username,
-                'password' => $this->password,
-                'listId' => $this->listId,
-            ]);
 
-            $recipientId = $subscribe->create($this->getModelEmail(), $this->getSendValues());
-
-            if ($recipientId) {
-
-                if ($this->groupId) {
-                    $subscribe->addToGroup($this->groupId, $recipientId);
+            if ($this->formId) {
+                $form = new Form([
+                    'authKey' => $this->authKey,
+                    'username' => $this->username,
+                    'password' => $this->password,
+                    'formId' => $this->formId,
+                ]);
+                if ($form->create($this->getModelEmail(), $this->getSendValues())) {
+                    Yii::$app->session->setFlash(self::MAIL_SUBSCRIBE_SUCCESS);
                 }
-                
-                Yii::$app->session->setFlash(self::MAIL_SUBSCRIBE_SUCCESS);
+            } else {
+                $subscribe = new Contacts([
+                    'authKey' => $this->authKey,
+                    'username' => $this->username,
+                    'password' => $this->password,
+                    'listId' => $this->listId,
+                ]);
+    
+                $recipientId = $subscribe->create($this->getModelEmail(), $this->getSendValues());
+    
+                if ($recipientId) {
+    
+                    if ($this->groupId) {
+                        $subscribe->addToGroup($this->groupId, $recipientId);
+                    }
+                    
+                    Yii::$app->session->setFlash(self::MAIL_SUBSCRIBE_SUCCESS);
+                }
             }
         }
 
