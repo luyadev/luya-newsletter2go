@@ -63,12 +63,13 @@ class SubscribeFormWidget extends Widget
     public $unsubscribed = false;
 
     /**
-     * @var string The name of attribute which contains the email adresse. This attribute email value will be taken to confirm and subscribe
+     * @var string The name of attribute which contains the email adresse.
      */
     public $emailAttributeName = 'email';
 
     /**
-     * @var array A list of attributes the {{luya\base\DynamicModel}} should contain.
+     * @var array A list of attributes the {{luya\base\DynamicModel}} should contain, those attributes will be sent to nl2go unless other defined in
+     * {{$sendAttributes}} definition.
      */
     public $attributes = ['email'];
 
@@ -98,6 +99,12 @@ class SubscribeFormWidget extends Widget
     public $attributeHints = [];
 
     /**
+     * @var array A list of attributes which should be send to newsletter2go, if empty all attributes from {{$attributes}} will be taken.
+     * This is mainly used to remove attributes which should not be sent, like captcha attributes or similar.
+     */
+    public $sendAttributes = [];
+
+    /**
      * {@inheritDoc}
      */
     public function init()
@@ -117,9 +124,7 @@ class SubscribeFormWidget extends Widget
                 'listId' => $this->listId,
             ]);
 
-            $attributes = $this->getModel()->attributes();
-            $attributes['is_unsubscribed'] = $this->unsubscribed;
-            $recipientId = $subscribe->create($this->getModelEmail(), $attributes);
+            $recipientId = $subscribe->create($this->getModelEmail(), $this->getSendValues());
 
             if ($recipientId) {
 
@@ -132,6 +137,24 @@ class SubscribeFormWidget extends Widget
         }
 
         ob_start();
+    }
+
+    /**
+     * Get the values which should be submited to the nl2go api
+     *
+     * @return array
+     */
+    private function getSendValues()
+    {
+        $attributes = $this->sendAttributes ? $this->sendAttributes : $this->attributes;
+
+        $values = [];
+        foreach ($attributes as $attributeName) {
+            $values[$attributeName] = $this->model->{$attributeName};
+        }
+        $values['is_unsubscribed'] = $this->unsubscribed;
+        
+        return $values;
     }
 
     /**
