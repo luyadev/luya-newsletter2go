@@ -2,11 +2,11 @@
 
 namespace luya\newsletter2go\widgets;
 
-use Form;
 use Yii;
 use luya\base\DynamicModel;
 use luya\base\Widget;
 use luya\newsletter2go\Contacts;
+use luya\newsletter2go\Form;
 use yii\base\InvalidConfigException;
 
 /**

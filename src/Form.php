@@ -1,5 +1,7 @@
 <?php
 
+namespace luya\newsletter2go;
+
 use Curl\Curl;
 use luya\helpers\Json;
 use luya\newsletter2go\Auth;
