@@ -5,6 +5,8 @@
 # LUYA Newsletter2Go
 
 [![LUYA](https://img.shields.io/badge/Powered%20by-LUYA-brightgreen.svg)](https://luya.io)
+[![Latest Stable Version](https://poser.pugx.org/luyadev/luya-newsletter2go/v/stable)](https://packagist.org/packages/luyadev/luya-newsletter2go)
+[![Total Downloads](https://poser.pugx.org/luyadev/luya-newsletter2go/downloads)](https://packagist.org/packages/luyadev/luya-newsletter2go)
 
 A subscription widget and helper methods to work with newsletter2go.com serivce.
 
