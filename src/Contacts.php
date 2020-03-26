@@ -6,7 +6,6 @@ use Curl\Curl;
 use luya\helpers\Json;
 use yii\base\BaseObject;
 use yii\base\InvalidConfigException;
-use yii\helpers\VarDumper;
 
 class Contacts extends BaseObject
 {
@@ -91,7 +90,7 @@ class Contacts extends BaseObject
     {
         $groupId = strtolower($groupId);
         $recipientId = strtolower($recipientId);
-        $token = $this->auth($this->username, $this->password, $this->authKey);
+        $token = Auth::auth($this->username, $this->password, $this->authKey);
         
         $curl = new Curl();
         $curl->setHeader('Authorization', 'Bearer ' . $token);
