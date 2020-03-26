@@ -2,7 +2,7 @@
 	"name" : "luyadev/luya-newsletter2go",
 	"description" : "A LUYA library for newsletter2go service.",
 	"type" : "luya-extension",
-	"keywords" : ["luya"],
+	"keywords" : ["luya", "newsletter", "newsletter2go"],
 	"license": "MIT",
 	"authors" : [
 		{
