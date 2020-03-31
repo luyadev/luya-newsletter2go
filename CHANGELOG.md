@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 1.1.0 (31. March 2020)
+
++ New Form class to submit API forms
++ New event for SubscribeFormWidget (afterModelLoad).
+
 ## 1.0.0 (26. March 2020)
 
 + First stable release
