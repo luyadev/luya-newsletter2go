@@ -33,6 +33,8 @@ class SubscribeFormWidget extends Widget
 {
     const MAIL_SUBSCRIBE_SUCCESS = 'mailSubscribeSuccess';
 
+    const EVENT_AFTER_LOAD_MODEL = 'afterLoadModel';
+
     /**
      * @var integer The list id where the subscribes should be added (also known as adressbook).
      */
@@ -123,6 +125,8 @@ class SubscribeFormWidget extends Widget
         }
 
         if ($this->getModel()->load(Yii::$app->request->post()) && $this->getModel()->validate()) {
+
+            $this->trigger(self::EVENT_AFTER_LOAD_MODEL);
 
             if ($this->formId) {
                 $form = new Form([
