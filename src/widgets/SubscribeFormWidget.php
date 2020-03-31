@@ -28,6 +28,9 @@ use yii\base\InvalidConfigException;
  * @property DynamicModel $model
  * @property string $modelEmail
  * @property boolean $isSubscribed
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 1.0.0
  */
 class SubscribeFormWidget extends Widget
 {

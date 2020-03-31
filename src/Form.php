@@ -7,8 +7,17 @@ use luya\helpers\Json;
 use luya\newsletter2go\Auth;
 use yii\base\BaseObject;
 
+/**
+ * Submit form API
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 1.1.0
+ */
 class Form extends BaseObject
 {
+    /**
+     * @var string The form to submit
+     */
     public $formId;
     
     /**

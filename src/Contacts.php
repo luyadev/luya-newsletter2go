@@ -7,6 +7,12 @@ use luya\helpers\Json;
 use yii\base\BaseObject;
 use yii\base\InvalidConfigException;
 
+/**
+ * Contacts API
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 1.0.0
+ */
 class Contacts extends BaseObject
 {
     /**

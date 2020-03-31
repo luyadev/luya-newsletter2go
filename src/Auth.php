@@ -6,6 +6,12 @@ use Curl\Curl;
 use luya\helpers\Json;
 use yii\base\BaseObject;
 
+/**
+ * Auth API
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 1.1.0
+ */
 class Auth extends BaseObject
 {
     /**
